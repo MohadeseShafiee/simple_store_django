@@ -1,6 +1,6 @@
 from typing import Any
 from django import forms
-from .models import User
+from .models import User, OtpCode
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
@@ -13,14 +13,15 @@ class UserCreationForm(forms.ModelForm):
         model = User
         fields = ('email', 'phone_number', 'full_name')
 
-
-    def cleean_password2(self):
+    #Password Validation
+    def clean_password2(self):
         cd = self.cleaned_data
         if cd['password1'] and cd['password2'] and cd['password1'] != cd['password2']:
             raise ValidationError('password dont match')
         return cd['password2']
     
 
+    #Save Password
     def save(self, commit=True):
         user = super.save(commit=False)
         user.set_password(self.cleaned_data['password1'])
@@ -31,7 +32,9 @@ class UserCreationForm(forms.ModelForm):
 
 
 class UserChangeForm(forms.ModelForm):
-    password = ReadOnlyPasswordHashField(help_text = "you cant change password using <a href=\"../password/\">this form</a>.")
+    #read only: Can't Change password
+    #help text: Change password
+    password = ReadOnlyPasswordHashField(help_text = "you can change password using <a href=\"../password/\">this form</a>.")
 
     class Meta:
         model = User
@@ -46,6 +49,7 @@ class UserRegisterationForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput)
 
 
+    #Email Validation
     def clean_email(self):
         email = self.cleaned_data['email']
         user = User.objects.filter(email=email).exists()
@@ -58,8 +62,14 @@ class UserRegisterationForm(forms.Form):
         user = User.objects.filter(phone_number=phone).exists()
         if user:
             raise ValidationError('This phone already exists')
+        OtpCode.objects.filter(phone_number=phone).delete()
         return phone
 
 
 class verifyCodeForm(forms.Form):
     code = forms.IntegerField()
+
+
+class UserLoginForm(forms.Form):
+    phone = forms.CharField()
+    password = forms.CharField(widget=forms.PasswordInput)
