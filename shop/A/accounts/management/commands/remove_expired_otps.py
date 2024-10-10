@@ -6,8 +6,8 @@ import pytz
 
 
 
-class Command(BaseCommand):
-    help = 'remove all expire otp codes'
+class Command(BaseCommand):   
+    help = 'remove all expired otp codes'
 
     def handle(self, *args, **options):
         expired_time = datetime.now(tz=pytz.timezone('Asia/Tehran')) - timedelta(minutes=2)

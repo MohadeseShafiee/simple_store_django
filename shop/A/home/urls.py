@@ -6,8 +6,8 @@ from . import views
 app_name = 'home'
 
 bucket_urls = [
-    path('bucket/', views.BucketHome.as_view(), name='bucket'),
-    path('delete_obj/<key>', views.DeleteBucketObject.as_view(), name='delete_obj_bucket'),
+    path('', views.BucketHome.as_view(), name='bucket'),
+    path('delete_obj/<str:key>/', views.DeleteBucketObject.as_view(), name='delete_obj_bucket'),
     path('download_obj/<str:key>/', views.DownloadBucketObject.as_view(), name='download_obj_bucket'),
 ]
 

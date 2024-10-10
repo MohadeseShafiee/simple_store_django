@@ -82,7 +82,7 @@ class UserLoginView(View):
         return render(request, self.template_name, {'form':form})
     
     def post(self, request):
-        form = self.form_class
+        form = self.form_class(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
             user = authenticate(request, phone_number=cd['phone'], password=cd['password'])

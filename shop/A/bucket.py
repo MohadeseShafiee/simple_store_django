@@ -6,6 +6,9 @@ class Bucket:
     """CDN Bucket manager
 
     init method creates connection.
+
+    NOTE:
+        none of these methods are async. use public interface in task.py modules instead.
     """
 
 
