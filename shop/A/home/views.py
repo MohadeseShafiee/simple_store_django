@@ -3,8 +3,8 @@ from django.views import View
 from .models import Product, Category
 from . import tasks
 from django.contrib import messages
-from django.contrib.auth.mixins import UserPassesTestMixin
 from utils import IsAdminUserMixin
+from orders.forms import CarAddForm
 
 
 class HomeView(View):
@@ -22,7 +22,8 @@ class HomeView(View):
 class ProductDetailView(View):
     def get(self, request, slug):
         product = get_object_or_404(Product, slug=slug)
-        return render(request, 'home/detail.html', {'product':product})
+        form = CarAddForm()
+        return render(request, 'home/detail.html', {'product':product, 'form':form})
     
 
 
