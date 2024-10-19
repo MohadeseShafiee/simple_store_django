@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     #Third-party apps
     'storage',
     'django_celery_beat',
+    'ckeditor',
 ]
 
 MIDDLEWARE = [
@@ -95,15 +96,15 @@ DATABASES = {
 }
 
 
-CACHES = {
-    'default' : {
-        'BACKEND' : 'django.core.cache.backends.redis.RedisCache',
-        'LOCALHOST' : 'redis://127.0.0.1:6379',
-    }
-}
+# CACHES = {
+#     'default' : {
+#         'BACKEND' : 'django.core.cache.backends.redis.RedisCache',
+#         'LOCALHOST' : 'redis://127.0.0.1:6379',
+#     }
+# }
 
 
-SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+# SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -172,3 +173,11 @@ AWS_STORAGE_BUCKET_NAME = 'django-store2024'
 AWS_SERVICE_NAME = 's3'
 AWS_S3_FILE_OVERWRITE = False
 AWS_LOCAL_STORAGE = f'{BASE_DIR}/aws/'  
+
+
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+    }
+}
